@@ -5,8 +5,8 @@ all : deps clean install
 
 install : deps
 	# run nginx for pay.aceitchecripto.com that will serve BPS
-	docker build nginx/Dockerfile -t pay.aceitchecripto.com/nginx:latest
-	docker run pay.aceitchecripto.com/nginx:latest -n pay.aceitchecripto.com/nginx -d -p 80:80 -p 443:443
+	docker build nginx -t pay.aceitchecripto.com/nginx:latest
+	docker run -n pay.aceitchecripto.com/nginx -d -p 80:80 -p 443:443 pay.aceitchecripto.com/nginx:latest
 	# set parameters to run btcpay-setup.sh
 	export BTCPAY_HOST="pay.aceitchecripto.com"
 	export REVERSEPROXY_DEFAULT_HOST="pay.aceitchecripto.com"
@@ -41,7 +41,7 @@ clean :
 	. ./btcpay-clean.sh || true
 	cd ..
 	rm -rf btcpayserver-docker
-	rm /etc/systemd/system/btcpayserver.service && rm /etc/profile.d/btcpay-env.sh
+	rm -f /etc/systemd/system/btcpayserver.service && rm -f /etc/profile.d/btcpay-env.sh
 	cd /usr/local/bin
-	rm bitcoin-cli.sh bitcoinlncli.sh btcpay-* changedomain.sh
+	rm -f bitcoin-cli.sh bitcoinlncli.sh btcpay-* changedomain.sh
 	# AVOID (loses blockchains): Delete all volumes in /var/lib/docker/volumes/ with docker-compose -f $BTCPAY_DOCKER_COMPOSE down --v
