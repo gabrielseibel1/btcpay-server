@@ -1,14 +1,16 @@
 .ONESHELL:
 SHELL = /usr/bin/bash
 
-all : deps clean install
+all : deps clean nginx payserver
 
-install : deps
+nginx : deps
 	# run nginx for pay.aceitchecripto.com that will serve BPS
 	docker build nginx -t pay.aceitchecripto.com/nginx:latest
 	docker stop pay.aceitchecripto.com-nginx || true
 	docker rm pay.aceitchecripto.com-nginx || true
 	docker run --name pay.aceitchecripto.com-nginx -d --network host pay.aceitchecripto.com/nginx:latest
+
+payserver : deps
 	# set parameters to run btcpay-setup.sh
 	export BTCPAY_HOST="pay.aceitchecripto.com"
 	export REVERSEPROXY_DEFAULT_HOST="pay.aceitchecripto.com"
