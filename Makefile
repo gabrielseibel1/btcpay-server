@@ -8,7 +8,7 @@ install : deps
 	docker build nginx -t pay.aceitchecripto.com/nginx:latest
 	docker stop pay.aceitchecripto.com-nginx || true
 	docker rm pay.aceitchecripto.com/nginx || true
-	docker run --name pay.aceitchecripto.com-nginx -d -p 80:80 -p 443:443 pay.aceitchecripto.com/nginx:latest
+	docker run --name pay.aceitchecripto.com-nginx -d --network host pay.aceitchecripto.com/nginx:latest
 	# set parameters to run btcpay-setup.sh
 	export BTCPAY_HOST="pay.aceitchecripto.com"
 	export REVERSEPROXY_DEFAULT_HOST="pay.aceitchecripto.com"
