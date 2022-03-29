@@ -7,7 +7,7 @@ install : deps
 	# run nginx for pay.aceitchecripto.com that will serve BPS
 	docker build nginx -t pay.aceitchecripto.com/nginx:latest
 	docker stop pay.aceitchecripto.com-nginx || true
-	docker rm pay.aceitchecripto.com/nginx || true
+	docker rm pay.aceitchecripto.com-nginx || true
 	docker run --name pay.aceitchecripto.com-nginx -d --network host pay.aceitchecripto.com/nginx:latest
 	# set parameters to run btcpay-setup.sh
 	export BTCPAY_HOST="pay.aceitchecripto.com"
