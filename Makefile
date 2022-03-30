@@ -8,7 +8,7 @@ nginx : deps
 	docker build nginx -t pay.aceitchecripto.com/nginx:latest
 	docker stop pay.aceitchecripto.com-nginx || true
 	docker rm pay.aceitchecripto.com-nginx || true
-	docker run --name pay.aceitchecripto.com-nginx -d --network host pay.aceitchecripto.com/nginx:latest
+	docker run --name pay.aceitchecripto.com-nginx -d --network host --restart always pay.aceitchecripto.com/nginx:latest
 
 payserver : deps
 	# set parameters to run btcpay-setup.sh
